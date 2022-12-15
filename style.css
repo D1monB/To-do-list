@@ -19,7 +19,7 @@ body {
     align-items: center;
     background-image: radial-gradient(circle at 50% -20.71%, #ffffa1 0, #f5ffa0 6.25%, #e4ffa0 12.5%, #d2ffa1 18.75%, #bdffa3 25%, #a7fda6 31.25%, #8cfaaa 37.5%, #6cf7af 43.75%, #3cf2b5 50%, #00edbc 56.25%, #00e8c6 62.5%, #00e4d0 68.75%, #00dfdc 75%, #00dbe9 81.25%, #00d7f5 87.5%, #00d3ff 93.75%, #00d0ff 100%);
     background-repeat: no-repeat;
-
+    padding: 0 10px;
 }
 .app{
     width: 600px;
@@ -29,7 +29,7 @@ body {
     flex-direction: column;
     background-color: ghostwhite;
     border: 5px solid black;
-    box-shadow: 0 1px 30px 0 rgba(0,0,0,0.14), 0 0px 0px 0 rgba(0,0,0,.12), 0 0px 0px 0px rgba(0,0,0,.3);
+    box-shadow: 0 1px 30px 0 rgba(0,0,0,0.14), 0 0 0 0 rgba(0,0,0,.12), 0 0 0 0 rgba(0,0,0,.3);
 }
 .app__header{
     display: flex;
@@ -118,7 +118,6 @@ body {
     width: 10px;
     height: 5px;
     background: cornflowerblue;
-    -webkit-transform: rotate(47deg);
     transform: rotate(47deg);
     transition: all 0.3s ease-out;
 }
@@ -128,7 +127,6 @@ body {
     width: 18px;
     height: 5px;
     background: cornflowerblue;
-    -webkit-transform: rotate(-50deg);
     transform: rotate(-50deg);
     transition: all 0.3s ease-out;
 }
