@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div class="app">
+        <div class="app__header">
+            <h1 class="header__logo">MY TO-DO LIST</h1>
+            <div class="header__icon">
+                <img src="img/Lovepik_com-450009859-pencil%20icon%20illustrated%20in%20vector.png" alt="Pencil">
+            </div>
+        </div>
+        <div class="app__content">
+            <form action='#'>
+                <input type="text" class="content__input" id="input" placeholder="ADD NEW TASK">
+                <button id = "add" class= "content__add"> <img src="img/plus.png" alt=""></button>
+            </form>
+            <ul class="content__list"></ul>
+        </div>
+        <div class="app__footer">
+            <button class="footer__clear-btn" id="clear-btn">Clear</button>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
