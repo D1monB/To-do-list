@@ -10,6 +10,7 @@ html{
 }
 
 body {
+    overflow: auto;
     font-family: 'Shadows Into Light', cursive;
     font-weight: 400;
     font-size: 16px;
@@ -71,6 +72,8 @@ body {
     justify-content: center;
     align-items: center;
     padding: 0 10px;
+    border: 2px solid black;
+    border-right: 0;
 }
 .content__add img{
     max-width: 30px;
@@ -157,6 +160,7 @@ body {
     align-items: center;
     justify-content: center;
     padding: 10px 0;
+    position: relative;
 }
 .footer__clear-btn{
     padding: 10px 20px;
@@ -168,4 +172,12 @@ body {
 }
 .footer__clear-btn:hover{
     opacity: .9;
+}
+
+.app__footer-total{
+    display: flex;
+    font-size: 2em;
+    position: absolute;
+    right: 20px;
+    top: 5px;
 }

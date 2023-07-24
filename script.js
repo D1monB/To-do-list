@@ -3,10 +3,13 @@ window.addEventListener('DOMContentLoaded',() =>{
     const addForm = document.querySelector('.app__content form'),
         $addInput = addForm.querySelector(`#input`),
         taskList = document.querySelector('.content__list'),
-        taskItem = document.querySelectorAll(".content__list-item"),
         $clearBtn = document.querySelector('#clear-btn');
+    const taskAmount = document.querySelector('#amount');
 
-    let amount = 0;
+    const MAX_TASKS = 10;
+    const LOCAL_STORAGE_KEY = 'taskDB';
+    const taskDB =  JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY)) || [];
+    let amount = taskDB.length || 0;
 
     addForm.addEventListener('submit', (event)=>{
         event.preventDefault();
@@ -14,49 +17,95 @@ window.addEventListener('DOMContentLoaded',() =>{
         if (newTask && newTask.trim()){
             addNewElement(newTask, taskList);
         }
-
         event.target.reset();
     });
 
     $clearBtn.addEventListener('click', deleteAllTasks);
 
 
-
-function addNewElement(task, parent){
-    if(amount < 10) {
-        parent.innerHTML += `
-    <li class="content__list-item">
-         <span>${task}</span>
-         <span class = "delete"></span>
-         <span class="complete"></span>
-    </li>
-    <hr>
-    `;
-
-        amount++;
-
-        document.querySelectorAll(`.delete`).forEach(item => {
-            item.addEventListener(`click`, () => {
-                item.parentElement.nextElementSibling.remove();
-                item.parentElement.remove();
-                amount--;
-            });
-        })
-
-        document.querySelectorAll(`.complete`).forEach(item => {
-            item.addEventListener('click', () => {
-                item.classList.toggle('incomplete');
-                item.parentElement.classList.toggle(`incomplete`)
-            });
-        })
+    function displayTasksFromLocalStorage() {
+        taskDB.forEach((task) => {
+            taskList.insertAdjacentHTML('beforeend', task);
+        });
     }
-    else {
-        alert("Можно добавить всего 10 тасков");
-    }
-}
 
-function deleteAllTasks(){
-    amount = 0;
-    taskList.innerHTML = '';
-}
+    displayTasksFromLocalStorage();
+
+    function addNewElement(task, parent){
+        if(amount < MAX_TASKS) {
+            const element = `<li class="content__list-item">
+                <span>${task}</span>
+                <span class = "delete" data-index="${amount}"></span>
+                <span class="complete" data-complete = ${true}></span>
+            </li>
+            <hr>`;
+
+            amount++;
+            taskDB.push(element);
+            parent.insertAdjacentHTML('beforeend', element);
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(taskDB));
+            changeTaskAmount();
+        }
+        else {
+            alert("You can add only 10 tasks");
+        }
+    }
+
+    function deleteParentElement(event){
+
+        if (event.target.classList.contains('delete')){
+            event.target.parentElement.nextElementSibling?.remove();
+            event.target.parentElement?.remove();
+            const index = +event.target.dataset.index;
+            taskDB.splice(index, 1);
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(taskDB));
+            document.querySelectorAll('.delete').forEach((item, i) => item.dataset.index = i);
+            amount--;
+            changeTaskAmount()
+        }
+
+    }
+
+    taskList.addEventListener('click', deleteParentElement);
+
+
+    taskList.addEventListener('click', toggleTask);
+    function toggleTask(event) {
+        if (event.target.classList.contains('complete')) {
+            const taskMsg = event.target.parentElement.firstElementChild.textContent;
+            const index = +event.target.previousElementSibling.dataset.index;
+            const isComplete = event.target.classList.contains('incomplete');
+            const completeClass = isComplete ? '' : 'incomplete';
+            const taskHTML = `<li class="content__list-item ${completeClass}">
+            <span>${taskMsg}</span>
+            <span class="delete" data-index="${index}"></span>
+            <span class="complete ${completeClass}"></span>
+        </li>
+        <hr>`;
+
+            taskDB[index] = taskHTML;
+            localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(taskDB));
+
+            event.target.classList.toggle('incomplete');
+            event.target.parentElement.classList.toggle('incomplete');
+        }
+    }
+
+    function changeTaskAmount(){
+        if (amount < MAX_TASKS && amount >= 0){
+            taskAmount.innerText = `0${amount}`
+        }
+        else{
+            taskAmount.innerText = amount;
+        }
+    }
+
+    changeTaskAmount()
+    function deleteAllTasks(){
+        amount = 0
+        taskDB.length = 0;
+        localStorage.removeItem(LOCAL_STORAGE_KEY)
+        taskList.innerHTML = '';
+        changeTaskAmount();
+    }
 });
