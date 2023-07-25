@@ -136,6 +136,15 @@ body {
 .content__list-item.incomplete{
     text-decoration: line-through red;
 }
+
+.time-create{
+    position: absolute;
+    right: 10%;
+    bottom: 0;
+    font-size: .4em;
+    font-weight: 900;
+}
+
 .complete.incomplete:before{
     content: "";
     position: absolute;

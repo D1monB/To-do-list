@@ -33,10 +33,12 @@ window.addEventListener('DOMContentLoaded',() =>{
 
     function addNewElement(task, parent){
         if(amount < MAX_TASKS) {
+            const date = new Date();
             const element = `<li class="content__list-item">
                 <span>${task}</span>
                 <span class = "delete" data-index="${amount}"></span>
-                <span class="complete" data-complete = ${true}></span>
+                <span class="time-create">${date.toDateString()}</span></span>
+                <span class="complete"></span>
             </li>
             <hr>`;
 
@@ -73,15 +75,17 @@ window.addEventListener('DOMContentLoaded',() =>{
     function toggleTask(event) {
         if (event.target.classList.contains('complete')) {
             const taskMsg = event.target.parentElement.firstElementChild.textContent;
-            const index = +event.target.previousElementSibling.dataset.index;
+            const dateMsg = event.target.previousElementSibling.textContent;
+            const index = +event.target.previousElementSibling.previousElementSibling.dataset.index;
             const isComplete = event.target.classList.contains('incomplete');
             const completeClass = isComplete ? '' : 'incomplete';
             const taskHTML = `<li class="content__list-item ${completeClass}">
-            <span>${taskMsg}</span>
-            <span class="delete" data-index="${index}"></span>
-            <span class="complete ${completeClass}"></span>
-        </li>
-        <hr>`;
+                        <span>${taskMsg}</span>
+                        <span class="delete" data-index="${index}"></span>
+                        <span class="time-create">${dateMsg}</span>
+                        <span class="complete ${completeClass}"></span>
+                    </li>
+                    <hr>`;
 
             taskDB[index] = taskHTML;
             localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(taskDB));
